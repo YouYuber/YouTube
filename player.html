@@ -1,15 +1,58 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>YouTube検索＆視聴</title>
-	<link rel="stylesheet" href="stylesheet.css">
-	<link rel="stylesheet" href="player.css">
-	<script src="script.js"></script>
-	<script>
-const qs = sel => document.querySelector(sel);
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YouTube検索＆視聴＋履歴</titile>
+  <link rel="stylesheet" href="stylesheet.css"> 
+  <link rel="stylesheet" href="player.css"> 
+  <script src="script.js"></script>
+</head>
+<body>
+  <header>
+	  <h1>YouTubeプレイヤー</h1>
+	  <span class="badge">HTML5+CSS3+JavaScrpit</span>
+	  <div class="btn-container"><button id="btn3" class="button">使い方</button></div>
+	  <div id="mask" class="hidden"></div> <section id="modal" class="hidden">
+		  <h1 class="h1">使い方</h1> 
+		  <p>1. 検索欄にキーワードを入力して「検索して再生」を押すか、YouTubeのURL又はIDを貼り付け、動画をプレイヤーに読み込ませて再生します。</p>
+		  <p>2. 公式のプレイヤーのため、字幕や画質変更なども可能です。</p> <h1 class="h1-1">注意事項</h1>
+		  <p>・本ページはYouTubeの公式プレイヤーを使用していますが、「YouTube」及び「Google」又はそれに準ずるサービスに関係はありません。閉鎖やページの削除に関しましてはご了承ください。</p> 
+		  <p>・現時点では検索欄にキーワードを入力しても、検索機能はご利用することはできません。恐れ入りますが、Web等でURL又はIDを検索したうえで本サービスをご利用ください。</p> 
+		  <p>・本サービスはローカル環境では稼働しません。必ず、サイトの保存はせずに使用してください。</p> 
+		  <p>
+	  </section>
+  </header>
+  <main class="app">
+    <section class="panel">
+      <div class="controls">
+        <label class="input">🔎<input id="query" type="text" placeholder="キーワード検索（YouTube埋め込み）" /></label>
+        <button class="btn primary" id="searchBtn">検索して再生</button>
+        <button class="btn" id="clearBtn">クリア</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label class="input">🔗<input id="urlInput" type="text" placeholder="YouTubeのURLまたは動画IDを貼り付け" /></label>
+        <button class="btn" id="loadUrlBtn">URLを読み込み</button>
+      </div>
+      <div class="player" style="margin-top:12px">
+        <iframe id="player"
+          src="https://www.youtube.com/embed?listType=search&list=%E3%83%88%E3%83%AC%E3%83%B3%E3%83%89"
+          allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <!-- 履歴表示 -->
+    <section class="panel">
+      <h2 style="font-size:16px;margin:0 0 10px">📜 閲覧履歴</h2>
+      <ul id="historyList" style="list-style:none;padding:0;margin:0;"></ul>
+      <button class="btn" id="clearHistoryBtn">履歴クリア</button>
+    </section>
+
+    <p class="footer">© 2025 — インテル最高ｩｩ</p>
+  </main>
+
+  <script>
+    const qs = sel => document.querySelector(sel);
     const player = qs('#player');
     const queryInput = qs('#query');
     const urlInput = qs('#urlInput');
@@ -126,53 +169,6 @@ const qs = sel => document.querySelector(sel);
 
     // 初期化
     updateHistoryUI();
-</script>
-
-</head>
-
-<body>
-	<header>
-		<h1>YouTubeプレイヤー</h1>
-		<span class="badge">HTML5+CSS3+JavaScrpit</span>
-		<div class="btn-container"><button id="btn3" class="button">使い方</button></div>
-		<div id="mask" class="hidden"></div>
-		<section id="modal" class="hidden">
-			<h1 class="h1">使い方</h1>
-			<p>1. 検索欄にキーワードを入力して「検索して再生」を押すか、YouTubeのURL又はIDを貼り付け、動画をプレイヤーに読み込ませて再生します。</p>
-			<p>2. 公式のプレイヤーのため、字幕や画質変更なども可能です。</p>
-			<h1 class="h1-1">注意事項</h1>
-			<p>・本ページはYouTubeの公式プレイヤーを使用していますが、「YouTube」及び「Google」又はそれに準ずるサービスに関係はありません。閉鎖やページの削除に関しましてはご了承ください。</p>
-		  <p>・現時点では検索欄にキーワードを入力しても、検索機能はご利用することはできません。恐れ入りますが、Web等でURL又はIDを検索したうえで本サービスをご利用ください。</p>
-			<p>・本サービスはローカル環境では稼働しません。必ず、サイトの保存はせずに使用してください。</p>
-			<p>
-		</section>
-	</header>
-	<main class="app">
-		<section class="panel">
-			<div class="controls">
-				<label class="input" title="現在、検索機能はご利用いただけません。">🔎<input id="query" type="text" placeholder="現在、検索機能はご利用いただけません。恐れ入りますが、下記のURL欄からご利用ください。" /></label>
-				<button class="btn primary" id="searchBtn">検索して再生</button>
-				<button class="btn" id="clearBtn">クリア</button>
-			</div>
-			<div class="row" style="margin-top:10px">
-				<label class="input" title="YouTubeのURLまたは動画IDを貼り付け">🔗<input id="urlInput" type="text" placeholder="YouTubeのURLまたは動画IDを貼り付け（例：https://youtu.be/dQw4w9WgXcQ）" /></label>
-				<button class="btn" id="loadUrlBtn">URLを読み込み</button>
-			</div>
-			<div class="player" style="margin-top:12px">
-				<iframe id="player"
-					src="https://www.youtube.com/embed?listType=search&list=%E3%83%88%E3%83%AC%E3%83%B3%E3%83%89"
-					title="YouTube video player"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-			</div>
-		</section>
-		<section class="panel" style="margin-top:14px">
-			<h2 style="font-size:16px;margin:0 0 10px">📜 閲覧履歴</h2>
-
-				<ul id="historyList" style="list-style:none;padding:0;margin:0;"></ul>
-				<button class="btn" id="clearHistoryBtn">履歴クリア</button>
-		</section>
-		<p class="footer">© 2025 — インテル最高ｩｩ</p>
-	</main>
+  </script>
 </body>
 </html>
